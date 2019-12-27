@@ -21,18 +21,53 @@ function convertToWord(letter) {
 }
 
 function win(userChoice, computerChoice) {
+  const smallUserWord = " user".fontsize(3).sup();
+  const smallCompWord = " comp".fontsize(3).sup();
+  const userChoice_div = document.getElementById(userChoice);
   userScore++;
   userScore_span.innerHTML = userScore;
   computerScore_span.innerHTML = computerScore;
+
   result_p.innerHTML = `
-    ${convertToWord(userChoice)}
+    ${convertToWord(userChoice)}${smallUserWord}
      beats  
-    ${convertToWord(computerChoice)}
-     You win  `;
+    ${convertToWord(computerChoice)}${smallCompWord}
+     , You win 🔥`;
+  userChoice_div.classList.add("green-glow");
+  setTimeout(() => userChoice_div.classList.remove("green-glow"), 300);
 }
-function lose() {}
-function draw() {
-  console.log("drawwwwwww");
+
+function lose(userChoice, computerChoice) {
+  const userChoice_div = document.getElementById(userChoice);
+  const smallUserWord = " user".fontsize(3).sup();
+  const smallCompWord = " comp".fontsize(3).sup();
+  computerScore++;
+  userScore_span.innerHTML = userScore;
+  computerScore_span.innerHTML = computerScore;
+
+  result_p.innerHTML = `
+    ${convertToWord(userChoice)}${smallUserWord}
+     loses to Computer 
+    ${convertToWord(computerChoice)}${smallCompWord}
+     , You lost... 😞 `;
+  userChoice_div.classList.add("red-glow");
+  setTimeout(() => {
+    userChoice_div.classList.remove("red-glow");
+  }, 300);
+}
+function draw(userChoice, computerChoice) {
+  const userChoice_div = document.getElementById(userChoice);
+  const smallUserWord = " user".fontsize(3).sup();
+  const smallCompWord = " comp".fontsize(3).sup();
+  result_p.innerHTML = `
+    ${convertToWord(userChoice)}${smallUserWord}
+    =
+    ${convertToWord(computerChoice)}${smallCompWord}
+     , It's a draw ⚖️`;
+  userChoice_div.classList.add("gray-glow");
+  setTimeout(() => {
+    userChoice_div.classList.remove("gray-glow");
+  }, 300);
 }
 function game(userChoice) {
   const computerChoice = getComputerChoice();
@@ -56,13 +91,13 @@ function game(userChoice) {
 }
 
 function main() {
-  rock_div.addEventListener("click", function() {
+  rock_div.addEventListener("click", () => {
     game("r");
   });
-  paper_div.addEventListener("click", function() {
+  paper_div.addEventListener("click", () => {
     game("p");
   });
-  scissors_div.addEventListener("click", function() {
+  scissors_div.addEventListener("click", () => {
     game("s");
   });
 }
